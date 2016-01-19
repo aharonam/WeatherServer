@@ -1,8 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var weatherDb = require('../services/weatherDb');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  var dbInstance = new weatherDb();
+  console.log(dbInstance.name);
   res.render('index', { title: 'Express' });
 });
 
