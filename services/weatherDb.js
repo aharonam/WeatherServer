@@ -6,15 +6,15 @@ let globals = require('../globals'),
     Datastore = require('nedb'),
     path = require('path'),
     dbFileSymbol = Symbol("fileName"),
-    nameSymbol = Symbol('name');
+    nameSymbol = Symbol('name'),
+    dbSymbol = Symbol('dbSymbol');
 
 class weatherDb {
     constructor(repositoryName) {
         if(!repositoryName){
             console.log("weatherDb: repository name is empty");
         }
-        this.db = null;
-        var appDir = path.dirname('app.js');
+        this[dbSymbol] = null;
         this[dbFileSymbol] = path.join(globals.rootPath, "db", repositoryName + ".db");
         this[nameSymbol] = repositoryName;
         this._init();
@@ -24,17 +24,13 @@ class weatherDb {
         return this[nameSymbol];
     }
 
-    _init(){
-        this.db = new Datastore({ filename: this[dbFileSymbol], autoload: true, inMemoryOnly:false});
-        console.log(this[nameSymbol] + ' database created!');
+    get db(){
+        return this[dbSymbol];
     }
 
-    insert(doc){
-        this.db.insert(doc, (e,doc)=>{
-            if(!e){
-                console.log("record inserted");
-            }
-        });
+    _init(){
+        this[dbSymbol] = new Datastore({ filename: this[dbFileSymbol], autoload: true, inMemoryOnly:false});
+        console.log(this[nameSymbol] + ' database created!');
     }
 }
 

@@ -5,7 +5,7 @@ var weatherDb = require('../services/weatherDb');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var dbInstance = new weatherDb("weather");
-  dbInstance.insert({
+  dbInstance.db.insert({
     name: "bla bla"
   });
   res.render('index', { title: 'Express' });
