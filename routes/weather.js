@@ -8,7 +8,7 @@ var url = require('url');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    let url_parts = url.parse(req.url, true);
+    var url_parts = url.parse(req.url, true);
     var text = url_parts.text;
     res.send(text);
 });
